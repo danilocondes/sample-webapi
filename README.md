@@ -10,8 +10,27 @@ A minimal ASP.NET Core Web API that demonstrates [PostHog](https://posthog.com) 
 
 ## Prerequisites
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download) (or .NET 8+ with a matching target framework)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or newer (.NET 9 also works via `global.json` roll-forward)
 - A PostHog Cloud or self-hosted project
+
+### Visual Studio (Windows)
+
+Use **Visual Studio 2022 17.8 or later** and install these workloads via **Visual Studio Installer → Modify**:
+
+1. **ASP.NET and web development** (required — without this you get *"This setup for this installation of Visual Studio is not complete"*)
+2. **.NET desktop development** (recommended)
+
+Then confirm the **.NET 8.0 Runtime** and **.NET 8.0 SDK** individual components are checked.
+
+If the installer shows a **Resume** or **Repair** button, run that first before opening the solution.
+
+You can also open the project without Visual Studio:
+
+```bash
+dotnet restore PostHogSample.sln
+dotnet build PostHogSample.sln
+dotnet run --project src/PostHogSample.Api
+```
 
 ## Quick start
 
