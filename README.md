@@ -57,6 +57,46 @@ Also check:
 - Temporarily allow the project `bin` folder in antivirus if it quarantines build output
 - Close any running instance of the API before rebuilding (a locked `.exe` shows as "denied")
 
+### `dotnet.exe` exited with code `-532462766` (0xE0434352)
+
+This means the app **crashed on startup** with an unhandled .NET exception. Common causes on Windows:
+
+**1. HTTPS launch profile without a dev certificate (most common)**
+
+Use the **http** launch profile, or run from the command line:
+
+```powershell
+dotnet run --project src/PostHogSample.Api --launch-profile http
+```
+
+If you need HTTPS locally:
+
+```powershell
+dotnet dev-certs https --clean
+dotnet dev-certs https --trust
+```
+
+**2. Missing .NET runtime**
+
+Install the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (includes ASP.NET Core runtime). The project targets `net8.0` and `net9.0`.
+
+Check installed runtimes:
+
+```powershell
+dotnet --list-runtimes
+dotnet --list-sdks
+```
+
+**3. See the real error message**
+
+Run from a terminal so the exception is printed:
+
+```powershell
+dotnet run --project src/PostHogSample.Api --launch-profile http
+```
+
+Or in Visual Studio: **View → Output**, show output from **Debug**.
+
 You can also open the project without Visual Studio:
 
 ```bash
