@@ -24,6 +24,39 @@ Then confirm the **.NET 8.0 Runtime** and **.NET 8.0 SDK** individual components
 
 If the installer shows a **Resume** or **Repair** button, run that first before opening the solution.
 
+### "Access denied" on `.exe` (Windows)
+
+Cloned repos are often marked as downloaded from the internet. Windows Defender or SmartScreen may block `PostHogSample.Api.exe` in `bin\`.
+
+**Recommended — run via `dotnet` (no `.exe` needed):**
+
+```powershell
+dotnet run --project src/PostHogSample.Api
+```
+
+Or double-click `run.cmd` in the repo root.
+
+**If it still fails, unblock the repo once (PowerShell as your user):**
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\scripts\unblock-windows.ps1
+```
+
+Then clean and rebuild:
+
+```powershell
+dotnet clean PostHogSample.sln
+dotnet build PostHogSample.sln
+dotnet run --project src/PostHogSample.Api
+```
+
+Also check:
+
+- Clone to a local folder (e.g. `C:\dev\sample-webapi`), not a network/sync path that restricts executables
+- Temporarily allow the project `bin` folder in antivirus if it quarantines build output
+- Close any running instance of the API before rebuilding (a locked `.exe` shows as "denied")
+
 You can also open the project without Visual Studio:
 
 ```bash
