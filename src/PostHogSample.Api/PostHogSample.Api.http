@@ -1,0 +1,64 @@
+@PostHogSample.Api_HostAddress = http://localhost:5032
+
+### Health
+GET {{PostHogSample.Api_HostAddress}}/api/health
+Accept: application/json
+
+### Events - capture custom event
+POST {{PostHogSample.Api_HostAddress}}/api/events/capture
+Content-Type: application/json
+
+{
+  "distinctId": "user-123",
+  "eventName": "order completed",
+  "properties": {
+    "order_id": "ord_456",
+    "total": 99.5
+  },
+  "personPropertiesToSet": {
+    "plan": "pro"
+  }
+}
+
+### Events - identify user
+POST {{PostHogSample.Api_HostAddress}}/api/events/identify
+Content-Type: application/json
+
+{
+  "distinctId": "user-123",
+  "email": "demo@example.com",
+  "name": "Demo User",
+  "personPropertiesToSetOnce": {
+    "signup_source": "sample-api"
+  }
+}
+
+### Events - demo product viewed
+POST {{PostHogSample.Api_HostAddress}}/api/events/demo/product-viewed?distinctId=user-123&productId=sku-42&category=electronics
+
+### Feature flags - check single flag
+GET {{PostHogSample.Api_HostAddress}}/api/featureflags/check/new-dashboard?distinctId=user-123
+
+### Feature flags - run experiment
+POST {{PostHogSample.Api_HostAddress}}/api/featureflags/experiments/run
+Content-Type: application/json
+
+{
+  "distinctId": "user-123",
+  "experimentFlagKey": "checkout-experiment"
+}
+
+### Errors - demo exception
+GET {{PostHogSample.Api_HostAddress}}/api/errors/demo/trigger?distinctId=user-123
+
+### Cohorts - list (requires personal API key)
+GET {{PostHogSample.Api_HostAddress}}/api/cohorts?limit=10
+
+### Actions - list (requires personal API key)
+GET {{PostHogSample.Api_HostAddress}}/api/actions?limit=10
+
+### Dashboards - list (requires personal API key)
+GET {{PostHogSample.Api_HostAddress}}/api/dashboards?limit=10
+
+### Insights - list (requires personal API key)
+GET {{PostHogSample.Api_HostAddress}}/api/insights?limit=10
