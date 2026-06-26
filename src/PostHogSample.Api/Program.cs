@@ -39,7 +39,11 @@ if (app.Environment.IsDevelopment())
 
 app.UsePostHogRequestContext();
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseAuthorization();
 app.MapControllers();
 
